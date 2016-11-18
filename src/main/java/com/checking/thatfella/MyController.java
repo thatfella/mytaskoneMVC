@@ -22,13 +22,26 @@ public class MyController {
    @RequestMapping(value= {"/ch","/ch/"}, method = RequestMethod.GET)
    public String Result(@RequestParam(value="number", required = false) String number, Map<String,Object> reqPar)
    {
-           reqPar.put("number",number);
-       int num= Integer.parseInt(String.valueOf(reqPar.get("number")));
-      reqPar.put("num",num);
-      reqPar.put("checked",checkcal.checkAll(num));
+       try {
+           reqPar.put("number", number);
+           int num = Integer.parseInt(String.valueOf(reqPar.get("number")));
+           reqPar.put("num", num);
+           reqPar.put("checked", checkcal.checkAll(num));
 
            return "/WEB-INF/views/totalres.jsp";
 
+       }
+
+       catch (Exception e)
+       {
+           e.getStackTrace();
+                   System.out.println(e);
+                           System.out.println(e.getStackTrace());
+           System.out.println(e.getMessage());
+
+           reqPar.put("error ", e.getMessage());
+                   return "/WEB-INF/views/failure.jsp";
+       }
    }
 
 }
